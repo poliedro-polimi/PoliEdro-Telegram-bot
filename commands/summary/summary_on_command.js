@@ -9,7 +9,7 @@ module.exports = {
     },
     async execute (ctx) {//channel_post outclass media group event
         try {
-            if (ctx.update.message.chat.username === process.env.DEBUG_ADMIN_CHAT_ID) {//.username looks at the public tag of the channel, .id is the unique id between the bot and the channel
+            if (ctx.update.message.chat.username === process.env.DEBUG_ADMIN) {//.username looks at the public tag of the channel, .id is the unique id between the bot and the channel
                 getEvents();
                 await sendOurMenu(ctx);
             } else {
