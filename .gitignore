@@ -1,5 +1,6 @@
 .idea
-.env
+.env.production
+.env.debug
 node_modules
 macello
 media/data/events/events_pending.json

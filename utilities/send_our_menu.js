@@ -11,11 +11,20 @@ sendOurMenu = async (ctx) => {
                 message = await ctx.telegram.sendMessage(process.env.GROUP_ID, caption, {
                     reply_markup: menuKeyboard()
                 })
+                messageDebug = await ctx.telegram.sendMessage(process.env.DEBUG_GROUP_ID, caption, {
+                    reply_markup: menuKeyboard()
+                })
+
                 break;
             }
             case 1:{
                 caption = `Dai un'occhiata al nostro [prossimo evento](https://t.me/${process.env.CHANNEL_ID}/${events[0].messageIdOnChannel}) il ${(new Intl.DateTimeFormat('it-IT', { dateStyle: 'short' })).format(events[0].date)}`
                 message = await ctx.telegram.sendPhoto(process.env.GROUP_ID, events[0].mediaId, {
+                    caption: caption,
+                    parse_mode: "MarkdownV2",
+                    reply_markup: menuKeyboard()
+                })
+                messageDebug = await ctx.telegram.sendPhoto(process.env.DEBUG_GROUP_ID, events[0].mediaId, {
                     caption: caption,
                     parse_mode: "MarkdownV2",
                     reply_markup: menuKeyboard()
@@ -39,6 +48,11 @@ sendOurMenu = async (ctx) => {
                     parse_mode: "MarkdownV2",
                     reply_markup: menuKeyboard()
                 })
+                messageDebug = await ctx.telegram.sendPhoto(process.env.DEBUG_GROUP_ID, mediaIdNextEvent, {
+                    caption: caption,
+                    parse_mode: "MarkdownV2",
+                    reply_markup: menuKeyboard()
+                })
 
                 //eventsMedia = []
 
@@ -57,6 +71,13 @@ sendOurMenu = async (ctx) => {
                 break;
             }
         }
+        //ctx.update.sendPoll(process.env.GROUP_CHAT_ID,
+        // 🇮🇹 Verrai a prendere qualcosa 🍹 con noi dopo l'evento ${date.getDay(),}? ☕️
+        // 🇬🇧 Will you come get drinks 🍹 with us after after the event ? ☕️,
+        // [
+        // {Ci sarò!},
+        // {I'll be there!}
+        // ],
         await ctx.telegram.pinChatMessage(process.env.GROUP_ID, message.message_id, {disable_notification: true})
     } catch (e) {
         sendError(ctx, e);
