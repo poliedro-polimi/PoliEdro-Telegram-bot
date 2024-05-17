@@ -26,7 +26,7 @@ module.exports = {
                 mediaGroupToCheck = ctx.update.channel_post.media_group_id === undefined ? 0 : ctx.update.channel_post.media_group_id;
             }
         }catch (e){
-            sendError(ctx, e);
+            await sendError(ctx, e);
         }
     }
 }

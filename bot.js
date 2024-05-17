@@ -83,7 +83,7 @@ bot.on("channel_post", async (ctx) => {
 
 commands.forEach((command, trigger) => {
     bot.command(trigger, async (ctx) => {
-        console.log("command");
+        console.log("command: "+trigger);
         try{
             await command.execute(ctx);
         }catch(e){
