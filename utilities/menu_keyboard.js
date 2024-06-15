@@ -53,7 +53,7 @@ menuKeyboard = () => {
         ] //
     }
 
-    if (currentDate >= 4 && currentDate <= 6) {
+    if (currentDate.getMonth() >= 4 && currentDate.getMonth() <= 6) {
         reply_markup.inline_keyboard.splice(4, 0, [
             {
                 text: "🌈 polimipride.it",
