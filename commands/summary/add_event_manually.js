@@ -10,7 +10,7 @@ module.exports = {//TODO actually it would need scenes, I will add listening fro
         try {
             if (ctx.update.message.chat.username === process.env.DEBUG_ADMIN) {//.username looks at the public tag of the channel, .id is the unique id between the bot and the channel
                 await ctx.telegram.sendMessage(process.env.DEBUG_ADMIN_CHAT_ID, "Insert an event");
-                ctx.Tele.on('message', async (ctx) => {
+                ctx.telegram.on('message', async (ctx) => {
                     newEventFromMessage(ctx);//TODO the id of the link will change because it has been sent on debug channel
                 });
                 console.log("Event added");

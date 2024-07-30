@@ -79,6 +79,7 @@ sendOurMenu = async (ctx) => {
         // {I'll be there!}
         // ],
         await ctx.telegram.pinChatMessage(process.env.GROUP_ID, message.message_id, {disable_notification: true})
+        await ctx.telegram.sendPhoto(process.env.DEBUG_ADMIN_CHAT_ID, process.env.PHOTO_ERROR_ID, {caption: `Amo ricordati le storie e i sondaggi che te li dimentichi sempre xoxo`});
     } catch (e) {
         sendError(ctx, e);
         console.log(e);
