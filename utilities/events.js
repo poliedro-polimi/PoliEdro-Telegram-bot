@@ -43,7 +43,7 @@ loadEvents = () => {
     try {
         const data = fs.readFileSync(filePath, 'utf8');
         events = JSON.parse(data);
-        events.forEach((event)=>{
+        events.forEach((event)=>{//Is it necessarily?
             event.date = new Date(event.date);
         });
         console.log(events);

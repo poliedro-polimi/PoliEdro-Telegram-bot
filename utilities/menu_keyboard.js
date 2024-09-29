@@ -47,7 +47,7 @@ menuKeyboard = () => {
             [
                 {
                     text: "📋 Diventa sociə",
-                    url: "https://poliedro-polimi.it/it/iscriviti/"
+                    url: "https://forms.microsoft.com/Pages/ResponsePage.aspx?id=3pyy-bP2S0uXugYWg9j2AHd6GU5OBh5KnRzLnE3MOvtURUdDVUVBSE80VEJOQjk1T1VQTFNSOE4yVCQlQCN0PWcu"//https://poliedro-polimi.it/it/iscriviti/
                 }
             ]
         ] //
