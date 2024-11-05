@@ -47,7 +47,13 @@ menuKeyboard = () => {
             [
                 {
                     text: "📋 Diventa sociə",
-                    url: "https://forms.microsoft.com/Pages/ResponsePage.aspx?id=3pyy-bP2S0uXugYWg9j2AHd6GU5OBh5KnRzLnE3MOvtURUdDVUVBSE80VEJOQjk1T1VQTFNSOE4yVCQlQCN0PWcu"//https://poliedro-polimi.it/it/iscriviti/
+                    url: "https://poliedro-polimi.it/it/iscriviti/"
+                }
+            ],
+            [
+                {
+                    text: "👥 Collabora con noi",
+                    url: "https://forms.office.com/Pages/DesignPageV2.aspx?subpage=design&FormId=3pyy-bP2S0uXugYWg9j2ABmPBlyQx15FjADojH4XlxdURTJERjFMSDdEWlVEU05PUUc0OTFLVzNDUC4u&Token=7f7125dc61174498ae936079a1067ef1"
                 }
             ]
         ] //
