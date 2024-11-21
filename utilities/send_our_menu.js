@@ -11,9 +11,11 @@ sendOurMenu = async (ctx) => {
                 message = await ctx.telegram.sendMessage(process.env.GROUP_ID, caption, {
                     reply_markup: menuKeyboard()
                 })
-                messageDebug = await ctx.telegram.sendMessage(process.env.DEBUG_GROUP_ID, caption, {
-                    reply_markup: menuKeyboard()
-                })
+                if(!process.env.ON_DEBUG) {
+                    messageDebug = await ctx.telegram.sendMessage(process.env.DEBUG_GROUP_ID, caption, {
+                        reply_markup: menuKeyboard()
+                    })
+                }
 
                 break;
             }
@@ -24,11 +26,13 @@ sendOurMenu = async (ctx) => {
                     parse_mode: "MarkdownV2",
                     reply_markup: menuKeyboard()
                 })
-                messageDebug = await ctx.telegram.sendPhoto(process.env.DEBUG_GROUP_ID, events[0].mediaId, {
-                    caption: caption,
-                    parse_mode: "MarkdownV2",
-                    reply_markup: menuKeyboard()
-                })
+                if(!process.env.ON_DEBUG) {
+                    messageDebug = await ctx.telegram.sendPhoto(process.env.DEBUG_GROUP_ID, events[0].mediaId, {
+                        caption: caption,
+                        parse_mode: "MarkdownV2",
+                        reply_markup: menuKeyboard()
+                    })
+                }
                 break;
             }
             default:{//Telegram APIs doesn't support mediaGroup sent with keyboard rip
@@ -48,11 +52,13 @@ sendOurMenu = async (ctx) => {
                     parse_mode: "MarkdownV2",
                     reply_markup: menuKeyboard()
                 })
-                messageDebug = await ctx.telegram.sendPhoto(process.env.DEBUG_GROUP_ID, mediaIdNextEvent, {
-                    caption: caption,
-                    parse_mode: "MarkdownV2",
-                    reply_markup: menuKeyboard()
-                })
+                if(!process.env.ON_DEBUG) {
+                    messageDebug = await ctx.telegram.sendPhoto(process.env.DEBUG_GROUP_ID, mediaIdNextEvent, {
+                        caption: caption,
+                        parse_mode: "MarkdownV2",
+                        reply_markup: menuKeyboard()
+                    })
+                }
 
                 //eventsMedia = []
 
