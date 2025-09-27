@@ -3,4 +3,5 @@
 .env.debug
 node_modules
 macello
-media/data/events/events_pending.json
+old_stuff/media/data/events/events_pending.json
+/.env
