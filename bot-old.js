@@ -2,12 +2,12 @@ require("dotenv").config();
 const { Telegraf, Format } = require('telegraf');
 const fs = require('fs');
 const path = require('path');
-const {loadEvents} = require('./utilities/events.js');
-const {sendError} = require("./utilities/send_error.js");
+const {loadEvents} = require('./old_stuff/utilities/events.js');
+const {sendError} = require("./old_stuff/utilities/send_error.js");
 //let events_pending = require(`./events.js`);
 //const { message } = require('telegraf/filters');
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const botOld = new Telegraf(process.env.BOT_TOKEN);
 
 let commands = new Map();
 const foldersPathCommands = path.join(__dirname, 'commands');
@@ -48,7 +48,7 @@ for (const folder of automationsFolder) {
 loadEvents();
 
 //check if it's a command or not
-bot.use(async (ctx, next) => {
+botOld.use(async (ctx, next) => {
     console.log('use')
     await next();
     // const command = commands.get('todo');
@@ -75,14 +75,14 @@ bot.use(async (ctx, next) => {
     // }
 });
 
-bot.on("channel_post", async (ctx) => {
+botOld.on("channel_post", async (ctx) => {
     console.log('channel post')
     await automations.get('summary_on_update').execute(ctx);
 })
 
 
 commands.forEach((command, trigger) => {
-    bot.command(trigger, async (ctx) => {
+    botOld.command(trigger, async (ctx) => {
         console.log("command: "+trigger);
         try{
             await command.execute(ctx);
@@ -93,7 +93,7 @@ commands.forEach((command, trigger) => {
 })
 
 
-bot.launch().then(() => {
+botOld.launch().then(() => {
     console.log('Il bot è online!');//idk perché non va
 });
 

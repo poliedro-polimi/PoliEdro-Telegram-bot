@@ -1,6 +1,6 @@
 const {getEvents} = require('./events.js');
-const {menuKeyboard} = require('../utilities/menu_keyboard.js');
-const {sendError} = require('../utilities/send_error.js');
+const {menuKeyboard} = require('./menu_keyboard.js');
+const {sendError} = require('./send_error.js');
 
 sendOurMenu = async (ctx) => {
     events = getEvents();
