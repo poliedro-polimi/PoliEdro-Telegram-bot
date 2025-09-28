@@ -14,14 +14,15 @@ getEvents = () => {
     return events;
 }
 
+function isDatePassed(dateString) {
+    const currentDate = new Date();
+    const currentDay = currentDate.setHours(0, 0, 0, 0);
+    const eventDate = new Date(dateString).setHours(0, 0, 0, 0);
+    return eventDate < currentDay;
+}
+
 checkEvents = () => {
-    let date = new Date();
-    events.forEach((event)=>{
-        if(event.date < date){
-            events.slice(events.indexOf(event), 1)
-            events.pop(event);
-        }
-    })
+    events = events.filter(event => !isDatePassed(event.date));
     console.log("New list of events:" + events);
     saveEvents();
     //have we to reorder them?
