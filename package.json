@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.50.1",
+    "@grammyjs/commands": "^1.2.0",
     "dotenv": "^17.2.2",
+    "grammy": "^1.38.2",
     "nodemon": "^3.1.10",
     "telegraf": "^4.16.3",
     "telegraf-media-group": "^1.2.1",

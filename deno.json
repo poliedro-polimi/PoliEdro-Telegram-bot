@@ -4,6 +4,8 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
-    "grammy": "https://deno.land/x/grammy@v1.38.2/mod.ts"
-  }
+    "grammy": "npm:grammy",
+    "grammy-commands": "npm:@grammyjs/commands"
+  },
+  "nodeModulesDir": "auto"
 }

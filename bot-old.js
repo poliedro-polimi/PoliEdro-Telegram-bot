@@ -7,7 +7,7 @@ const {sendError} = require("./old_stuff/utilities/send_error.js");
 //let events_pending = require(`./events.js`);
 //const { message } = require('telegraf/filters');
 
-const botOld = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf(process.env.BOT_TOKEN);
 
 let commands = new Map();
 const foldersPathCommands = path.join(__dirname, 'commands');
@@ -48,7 +48,7 @@ for (const folder of automationsFolder) {
 loadEvents();
 
 //check if it's a command or not
-botOld.use(async (ctx, next) => {
+bot.use(async (ctx, next) => {
     console.log('use')
     await next();
     // const command = commands.get('todo');
@@ -75,14 +75,14 @@ botOld.use(async (ctx, next) => {
     // }
 });
 
-botOld.on("channel_post", async (ctx) => {
+bot.on("channel_post", async (ctx) => {
     console.log('channel post')
     await automations.get('summary_on_update').execute(ctx);
 })
 
 
 commands.forEach((command, trigger) => {
-    botOld.command(trigger, async (ctx) => {
+    bot.command(trigger, async (ctx) => {
         console.log("command: "+trigger);
         try{
             await command.execute(ctx);
@@ -93,7 +93,7 @@ commands.forEach((command, trigger) => {
 })
 
 
-botOld.launch().then(() => {
+bot.launch().then(() => {
     console.log('Il bot è online!');//idk perché non va
 });
 

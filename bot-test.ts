@@ -1,14 +1,11 @@
-import { Bot } from "grammy";
+import { Bot } from "grammy"
+import { CommandContext } from "https://deno.land/x/grammy@v1.38.2/context.ts";
 import "jsr:@std/dotenv/load";
-import {userCommands} from "./commands/user-command-group.ts";
-import {adminCommands} from "./commands/admin/admin-command-group.ts";
+import {generateReport} from "./test.ts";
 
-//load events and send error import TODO
+const botTest = new Bot(Deno.env.get("BOT_TOKEN_TEST"))
 
-const bot = new Bot(Deno.env.get("BOT_TOKEN_TEST"))
-
-// Middleware to add config to context
-bot.use(async (ctx, next) => {
+botTest.use(async (ctx, next) => {
   const botDeveloperId = Number(Deno.env.get("ADMIN_ID"))
 
   ctx.config = {
@@ -20,13 +17,11 @@ bot.use(async (ctx, next) => {
 })
 
 // Commands
-bot.use(userCommands);
-bot.filter((ctx) => ctx.config.isDeveloper).use(adminCommands)
+botTest.chatType("private").command("start", (ctx) => ctx.reply("Ciao! Sono Florence, la mascotte di PoliEdro e il botTest del gruppo Telegram di Associazione."));
 
-bot.on("me")
+botTest.command("report", generateReport);
 
-// Listeners
-bot.on("message", (ctx) => {
+botTest.on("message", (ctx) => {
     if (ctx.config.isDeveloper) {
       ctx.reply("Ciao Developer! 👋")
     } else {
@@ -35,6 +30,6 @@ bot.on("message", (ctx) => {
   }
 );
 
-// Start the bot
-bot.start();
 console.log(`%cFlorence - Version: ${Deno.env.get("BOT_VERSION")} - Ready...`, "color: green; font-weight: bold");
+
+botTest.start();
