@@ -5,3 +5,4 @@ node_modules
 macello
 old_stuff/media/data/events/events_pending.json
 /.env
+/.env_old
