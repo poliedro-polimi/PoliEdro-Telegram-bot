@@ -1,0 +1,9 @@
+{
+  "tasks": {
+    "dev": "deno -EIN --allow-read --watch-hmr bot.ts"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "grammy": "https://deno.land/x/grammy@v1.38.2/mod.ts"
+  }
+}
