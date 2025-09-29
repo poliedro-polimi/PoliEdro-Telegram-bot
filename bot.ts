@@ -5,23 +5,35 @@ import {adminCommands} from "./commands/admin/admin-command-group.ts";
 import {me} from "./commands/me.ts";
 
 import { createClient } from "@supabase/supabase-js";
+import {Database} from "./src/lib/types/database.types.ts";
 
-//load events and send error import TODO
+// Setup
+// console.log(Deno.args)
+const isRunningLocally = Deno.args.includes("sb-local")
 
-const bot = new Bot(Deno.env.get("BOT_TOKEN_TEST"))
-const supabase = createClient(Deno.env.get("SUPABASE_URL"), Deno.env.get("SUPABASE_KEY"));
+const bot_token = isRunningLocally ? Deno.env.get("BOT_TOKEN_TEST") : Deno.env.get("BOT_TOKEN_TEST")
+const supabase_url = isRunningLocally ? Deno.env.get("SUPABASE_URL_LOCAL") : Deno.env.get("SUPABASE_URL")
+const supabase_key = isRunningLocally ? Deno.env.get("SUPABASE_KEY_LOCAL") : Deno.env.get("SUPABASE_KEY")
+
+const bot = new Bot(bot_token)
+const supabase = createClient<Database>(supabase_url, supabase_key);
+
+// Type Aliases
+type Admin = Database['public']['Tables']['Admin']['Row']
+
+const admins: Admin[] = await supabase.from("Admin").select("*")
+console.debug(admins.data)
 
 // Middleware to add config to context
 bot.use(async (ctx, next) => {
-  const botDeveloperId = Number(Deno.env.get("ADMIN_ID"))
-
   ctx.config = {
-    botDeveloper: botDeveloperId,
-    isDeveloper: ctx.from?.id === botDeveloperId
+    isDeveloper: admins.data.some((admin: Admin) => admin.user_id === ctx.from.id)
   }
 
   await next()
 })
+
+//TODO: load events and send error import
 
 // Commands
 bot.use(userCommands);
@@ -47,4 +59,6 @@ bot.start()
   .catch((err) => {
     console.error("%cSi è verificato un errore: ", err, "color: red; font-weight: bold");
   });
-console.log(`%cFlorence - Version: ${Deno.env.get("BOT_VERSION")} - Ready...`, "color: green; font-weight: bold");
+
+if (isRunningLocally) console.log(`\n%c⚠️ RUNNING ON LOCAL ENVIRONMENT`, "color: yellow; font-weight: bold");
+console.log(`%cFlorence 🐸 - Version: ${Deno.env.get("BOT_VERSION")}` + (isRunningLocally ? " (LOCAL) " : "") + "- Ready...", "color: green; font-weight: bold");

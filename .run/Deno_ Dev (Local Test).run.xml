@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Deno: Dev (Local Test)" type="DenoConfigurationType" inputPath="$PROJECT_DIR$/bot-test.ts" programParameters="task dev-local">
+    <method v="2" />
+  </configuration>
+</component>
