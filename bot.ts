@@ -2,10 +2,14 @@ import { Bot } from "grammy";
 import "jsr:@std/dotenv/load";
 import {userCommands} from "./commands/user-command-group.ts";
 import {adminCommands} from "./commands/admin/admin-command-group.ts";
+import {me} from "./commands/me.ts";
+
+import { createClient } from "@supabase/supabase-js";
 
 //load events and send error import TODO
 
 const bot = new Bot(Deno.env.get("BOT_TOKEN_TEST"))
+const supabase = createClient(Deno.env.get("SUPABASE_URL"), Deno.env.get("SUPABASE_KEY"));
 
 // Middleware to add config to context
 bot.use(async (ctx, next) => {
@@ -21,9 +25,9 @@ bot.use(async (ctx, next) => {
 
 // Commands
 bot.use(userCommands);
-bot.filter((ctx) => ctx.config.isDeveloper).use(adminCommands)
+bot.chatType("private").use(me)
 
-bot.on("me")
+bot.filter((ctx) => ctx.config.isDeveloper).use(adminCommands)
 
 // Listeners
 bot.on("message", (ctx) => {
@@ -36,5 +40,11 @@ bot.on("message", (ctx) => {
 );
 
 // Start the bot
-bot.start();
+bot.start()
+  .then(() => {
+    console.log(`Florence is shutting down...`, "color: red; font-weight: bold");
+  })
+  .catch((err) => {
+    console.error("%cSi è verificato un errore: ", err, "color: red; font-weight: bold");
+  });
 console.log(`%cFlorence - Version: ${Deno.env.get("BOT_VERSION")} - Ready...`, "color: green; font-weight: bold");
