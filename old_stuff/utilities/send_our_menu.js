@@ -50,7 +50,7 @@ sendOurMenu = async (ctx) => {
                 message = await ctx.telegram.sendPhoto(process.env.GROUP_ID, mediaIdNextEvent, {
                     caption: caption,
                     parse_mode: "MarkdownV2",
-                    reply_markup: menuKeyboard()
+                    reply_markup: menuKeyboxard()
                 })
                 if(!process.env.ON_DEBUG) {
                     messageDebug = await ctx.telegram.sendPhoto(process.env.DEBUG_GROUP_ID, mediaIdNextEvent, {

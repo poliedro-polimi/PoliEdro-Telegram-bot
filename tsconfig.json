@@ -7,7 +7,12 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "./built",
-    "allowJs": true
+    "allowJs": true,
+    "baseUrl": "src",
+    "paths": {
+      "@app/*": ["app/*"],
+      "@lib/*": ["lib/*"]
+    }
   },
   "include": ["./src/**/*"]
 }

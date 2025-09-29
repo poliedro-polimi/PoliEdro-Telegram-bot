@@ -1,22 +1,21 @@
 import { Bot } from "grammy";
 import "jsr:@std/dotenv/load";
-import {userCommands} from "./commands/user-command-group.ts";
-import {adminCommands} from "./commands/admin/admin-command-group.ts";
-import {me} from "./commands/me.ts";
+import {userCommands} from "@app/commands/user-command-group.ts";
+import {adminCommands} from "@app/commands/admin/admin-command-group.ts";
+import {me} from "@app/commands/me.ts";
 
-import { createClient } from "@supabase/supabase-js";
-import {Database} from "./src/lib/types/database.types.ts";
+import {Database} from "@lib/types/database.types.ts";
+import {SupabaseClientFactory} from "@lib/supabase/supabase-client-factory.ts";
+import {eventsRecap} from "./src/app/commands/admin/events-recap.ts";
 
 // Setup
 // console.log(Deno.args)
 const isRunningLocally = Deno.args.includes("sb-local")
 
 const bot_token = isRunningLocally ? Deno.env.get("BOT_TOKEN_TEST") : Deno.env.get("BOT_TOKEN_TEST")
-const supabase_url = isRunningLocally ? Deno.env.get("SUPABASE_URL_LOCAL") : Deno.env.get("SUPABASE_URL")
-const supabase_key = isRunningLocally ? Deno.env.get("SUPABASE_KEY_LOCAL") : Deno.env.get("SUPABASE_KEY")
 
 const bot = new Bot(bot_token)
-const supabase = createClient<Database>(supabase_url, supabase_key);
+const supabase = SupabaseClientFactory.getClient()
 
 // Type Aliases
 type Admin = Database['public']['Tables']['Admin']['Row']
@@ -37,12 +36,20 @@ bot.use(async (ctx, next) => {
 
 // Commands
 bot.use(userCommands);
-bot.chatType("private").use(me)
+bot.chatType("private").use(me).use(eventsRecap)
 
 bot.filter((ctx) => ctx.config.isDeveloper).use(adminCommands)
 
 // Listeners
+bot.on("message:photo", (ctx) => {
+  console.log(ctx)
+
+  ctx.replyWithPhoto(ctx.message.photo[ctx.message.photo.length - 1].file_id).then(_ => {})
+  ctx.reply("Bella foto! 📸").then(_ => {})
+})
+
 bot.on("message", (ctx) => {
+  ctx.replyWithPhoto("AgACAgQAAxkBAAIBC2ja-mTsmVu_JT2KwhZFFEPMv9q3AAIgzzEbs53YUtuGdqCRZgNJAQADAgADeQADNgQ", { caption: "Ecco una foto per te!" }).then(_ => {})
     if (ctx.config.isDeveloper) {
       ctx.reply("Ciao Developer! 👋")
     } else {
